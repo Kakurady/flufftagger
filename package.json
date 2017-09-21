@@ -1,0 +1,11 @@
+{
+  "name": "flufftagger",
+  "version": "0.1.0",
+  "description": "Helps fill furry art gallery submission forms from image metadata.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "UNLICENSED"
+}
