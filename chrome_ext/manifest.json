@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "flufftagger",
+    "version": "0.1.0",
+    
+    "description": "Helps fill furry art gallery submission forms from image metadata.",
+    
+    "permissions":
+    [
+        "https://www.weasyl.com/"
+    ],
+    "content_scripts" : [
+        {
+            "matches": ["https://www.weasyl.com/submit/visual"], 
+            "js": ["cscript_weasyl.js"]
+        }
+    ]
+}
