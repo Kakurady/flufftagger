@@ -5,14 +5,18 @@
     
     "description": "Helps fill furry art gallery submission forms from image metadata.",
     
-    "permissions":
-    [
-        "https://www.weasyl.com/"
-    ],
     "content_scripts" : [
         {
             "matches": ["https://www.weasyl.com/submit/visual"], 
             "js": ["cscript_weasyl.js"]
+        },
+        {   "matches": [
+            "https://www.furaffinity.net/submit*",
+            "https://sfw.furaffinity.net/submit*",
+            "http://www.furaffinity.net/submit*",
+            "http://sfw.furaffinity.net/submit*"
+            ], 
+            "js": ["cscript_furaffinity.js"]
         }
     ]
 }
