@@ -29,8 +29,7 @@ function attach(){
     var submitFormRegex = /^http(s)?:\/\/...\.furaffinity\.net\/submit(\/)?/
     var submitForm = [...document.forms].find( x=> x && submitFormRegex.test(x.action) );
     if (!submitForm) { 
-        warn("Can't find a submission form on this page to fill.")
-        isABug(); return false; 
+        return false; 
     }
     
     // are we making a visual submission?
@@ -40,7 +39,7 @@ function attach(){
         isABug(); return false; 
     } else if ( subTypeField.value != "submission"){
         warn("The submission type is not visual - I can't handle non-visual submissions yet.")
-        isAnEnhancement(); return false;
+        return false;
     }
     
     // which part are we in?
@@ -56,12 +55,14 @@ function attach(){
         if (box.files[0]){          
             fileChanged();
         }
-        box.addEventListener("change", fileChanged);
+        box.addEventListener("change", readMetadataAndSave);
         return true;
-    }
+    } // else if (part && part.value == "4"){
+    // loadMetadataResolveAndFill();
+    //}
 }
 
-async function fileChanged(){
+async function readMetadataAndSave(){
     var files = [...box.files];
     
     // substitute with actual metadata gathering
