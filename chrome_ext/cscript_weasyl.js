@@ -29,19 +29,15 @@ async function fileChanged(){
     tagbuilder.dispatchEvent(new KeyboardEvent("keyup"));
 }
 
+//FIXME: this does not work in Firefox :(
 function readFileAsArrayBufferAsync(file){
-    var reader = new FileReader();
-    return new Promise((resolve,reject) => {
-        try {
-            reader.onload = (evt) => resolve(reader.result);
-            reader.onerror = (evt) => reject(reader.error);
-            reader.onabort = (evt) => reject(evt);
-            reader.readAsArrayBuffer(file);
-        } catch (ex){
-            reject(ex);
-        }
-    });
+    let reader = new FileReader();
 
+    return new Promise((resolve,reject)=> {
+                reader.onload = x=>resolve(reader.result);
+                reader.readAsArrayBuffer(file);
+        }
+    );
 }
 
 async function readMetadataFromFile(file){
