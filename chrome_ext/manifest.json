@@ -8,7 +8,12 @@
     "content_scripts" : [
         {
             "matches": ["https://www.weasyl.com/submit/visual"], 
-            "js": ["cscript_weasyl.js"]
+            "js": [
+                "ext/webextension-polyfill/browser-polyfill.js",
+                "ext/ts-node-iptc/IptcReader.js",
+                "ext/buffer/buffer.js",
+                "cscript_weasyl.js"
+            ]
         },
         {   "matches": [
             "https://www.furaffinity.net/submit*",
@@ -16,7 +21,12 @@
             "http://www.furaffinity.net/submit*",
             "http://sfw.furaffinity.net/submit*"
             ], 
-            "js": ["cscript_furaffinity.js"]
+            "js": [
+                "ext/webextension-polyfill/browser-polyfill.js",
+                "ext/ts-node-iptc/IptcReader.js",
+                "ext/buffer/buffer.js",
+                "cscript_furaffinity.js"
+            ]
         }
     ]
 }
