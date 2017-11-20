@@ -5,6 +5,8 @@
     
     "description": "Helps fill furry art gallery submission forms from image metadata.",
     
+    "permissions": ["storage"],
+    
     "content_scripts" : [
         {
             "matches": ["https://www.weasyl.com/submit/visual"], 
@@ -12,6 +14,7 @@
                 "ext/webextension-polyfill/browser-polyfill.js",
                 "ext/ts-node-iptc/IptcReader.js",
                 "ext/buffer/buffer.js",
+                "cscript_common.js",
                 "cscript_weasyl.js"
             ]
         },
@@ -25,6 +28,7 @@
                 "ext/webextension-polyfill/browser-polyfill.js",
                 "ext/ts-node-iptc/IptcReader.js",
                 "ext/buffer/buffer.js",
+                "cscript_common.js",
                 "cscript_furaffinity.js"
             ]
         }

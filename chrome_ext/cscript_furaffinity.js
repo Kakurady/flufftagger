@@ -1,4 +1,5 @@
-var box;
+
+var box; // file upload box
 
 function info(...x){
     Console.info(...x);
@@ -26,14 +27,14 @@ function attach(){
     // what elements are in the page.
 
     // are we making a submission?
-    var submitFormRegex = /^http(s)?:\/\/...\.furaffinity\.net\/submit(\/)?/
-    var submitForm = [...document.forms].find( x=> x && submitFormRegex.test(x.action) );
+    let submitFormRegex = /^http(s)?:\/\/...\.furaffinity\.net\/submit(\/)?/
+    let submitForm = [...document.forms].find( x=> x && submitFormRegex.test(x.action) );
     if (!submitForm) { 
         return false; 
     }
     
     // are we making a visual submission?
-    var subTypeField = submitForm.elements["submission_type"];
+    let subTypeField = submitForm.elements["submission_type"];
     if (!subTypeField){ 
         warn("Can't find what's the submission type. I'm going to be careful and not do anything.")
         isABug(); return false; 
@@ -43,7 +44,7 @@ function attach(){
     }
     
     // which part are we in?
-    var nextPartField = submitForm.elements["part"];
+    let part = submitForm.elements["part"];
     if (part && part.value == "3"){
         // next step is step 3, so we are on step 2 - file upload
         
@@ -57,20 +58,71 @@ function attach(){
         }
         box.addEventListener("change", readMetadataAndSave);
         return true;
-    } // else if (part && part.value == "4"){
-    // loadMetadataResolveAndFill();
-    //}
+    } else if (part && part.value == "5"){
+        loadMetadataResolveAndFill(submitForm);
+    }
 }
 
 async function readMetadataAndSave(){
-    var files = [...box.files];
+    let files = [...box.files];
     
-    // substitute with actual metadata gathering
-    var filenames = files.map( x=> x.name );
-    var description = filenames.join("\n");
+    let meta = await readMetadataFromFile(files[0]);
+    console.log(meta);
     
-    // fixme: save file data to storage.
+    let savePromise = browser.storage.local.set({meta});
+    await savePromise;
 }
 
+async function loadMetadataResolveAndFill(submitForm){
+    let storedData = await browser.storage.local.get("meta");
+    let meta = storedData && storedData.meta;
+    
+    // interpret
+    var title = meta.headline;
+    var description = meta.caption;
+    var tags = [...new Set(buildFurAffinityTags(meta))];
+    
+//    let categorybox = submitForm.elements.cat;
+//    let themebox = submitForm.elements.atype;
+//    let speciesbox = submitForm.elements.species;
+//    let genderbox = submitForm.elements.gender;
+    
+    let titlebox = submitForm.elements.title;
+    titlebox.value = title.slice(0, titlebox.maxLength);
+    let descbox = submitForm.elements.message;
+    descbox.value = description;
+    let keywordsbox = submitForm.elements.keywords;
+    keywordsbox.value = tags.join(" ");
+    
+    titlebox.dispatchEvent(new Event("keyup"));
+    descbox.dispatchEvent(new Event("keyup"));
+    keywordsbox.dispatchEvent(new Event("keyup"));
+}
 
+function* buildFurAffinityTags(meta){
+    let tags = [...replaceDashes(meta.keywords)];
+    for(const keyword of tags){
+        var words = keyword.split(" ");
+        yield* words;
+    }
+    for(const keyword of tags){
+        var words = keyword.split(" ");
+        if (words.length > 1){
+            yield words.map(x=>x[0].toUpperCase().concat(x.slice(1))).join("");
+        }
+    }
+    
+}
+function* replaceDashes(keywords){
+    const underlined=/-/gi;
+    const removed = /'/gi;
+    for(const keyword of keywords){
+        // TODO process "Pokémon"
+        var kw = keyword;
+        kw = kw.replace(underlined, "_");
+        kw = kw.replace(removed, "");
+        yield kw;
+    }
+}
 
+attach();

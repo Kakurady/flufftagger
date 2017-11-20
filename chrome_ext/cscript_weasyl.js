@@ -29,34 +29,19 @@ async function fileChanged(){
     tagbuilder.dispatchEvent(new KeyboardEvent("keyup"));
 }
 
-//FIXME: this does not work in Firefox :(
-function readFileAsArrayBufferAsync(file){
-    let reader = new FileReader();
-
-    return new Promise((resolve,reject)=> {
-                reader.onload = x=>resolve(reader.result);
-                reader.readAsArrayBuffer(file);
-        }
-    );
-}
-
-async function readMetadataFromFile(file){
-    let arrayBuffer = await readFileAsArrayBufferAsync(file);
-
-    let nodeBuffer = buffer.Buffer.from(arrayBuffer);
-    let meta = IptcParser.IptcParser.parse(nodeBuffer);
-    
-    return meta;
-}
-
 function* buildWeasylTags(meta){
     const underlined=/[ -]/gi;
+    const removed = /'/gi;
     for(const keyword of meta.keywords){
         // TODO process "Pokémon"
-        yield keyword.replace(underlined, "_");
+        var kw = keyword;
+        kw = kw.replace(underlined, "_");
+        kw = kw.replace(removed, "");
+        yield kw;
     }
-    if (meta.city) yield meta.city;
-    if (meta.province_or_state) yield meta.province_or_state;
-    if (meta.country_or_primary_location_name) yield meta.country_or_primary_location_name;
+    // Need to also format these.
+    //if (meta.city) yield meta.city;
+    //if (meta.province_or_state) yield meta.province_or_state;
+    //if (meta.country_or_primary_location_name) yield meta.country_or_primary_location_name;
     
 }
