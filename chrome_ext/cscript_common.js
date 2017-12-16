@@ -5,11 +5,12 @@
 function readFileAsArrayBufferAsync(file){
     let reader = new FileReader();
 
-    return new Promise((resolve,reject)=> {
-                reader.onload = x=>resolve(reader.result);
-                reader.readAsArrayBuffer(file);
+    let p = new Promise((resolve,reject)=> {
+            reader.onload = x=>resolve(reader.result);
         }
     );
+    reader.readAsArrayBuffer(file);
+    return p;
 }
 
 async function readMetadataFromFile(file){
