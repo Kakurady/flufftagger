@@ -1,13 +1,20 @@
 {
   "name": "flufftagger",
   "version": "0.1.0",
-  "description": "Helps fill furry art gallery submission forms from image metadata.",
+  "description": "Browser extension that fills submission forms when uploading to multiple (furry) art gallery websites, using description/tags from image metadata.",
+  "bugs": {
+    "url": "https://github.com/Kakurady/flufftagger/issues"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "UNLICENSED",
+  "author": {
+    "name": "Kakurady",
+    "url": "https://twitter.com/kakurady"
+  },
+  "license": "Apache-2.0",
+  "repository": "kakurady/flufftagger",
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.2.0",

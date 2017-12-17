@@ -5,6 +5,10 @@
 
     "description": "Helps fill furry art gallery submission forms from image metadata.",
 
+    "author": "Kakurady",
+    "homepage_url": "https://github.com/Kakurady/flufftagger",
+
+
     "permissions": ["storage"],
 
     "content_scripts" : [
