@@ -29,20 +29,6 @@ module.exports = function(grunt) {
                     }
                 }
             },
-            // FIXME: don't actually need all function of Node's buffer, can do with much less
-            'buffer': {
-                files: [
-                    {
-                        src: "node_modules/buffer/index.js",
-                        dest: "chrome_ext/ext/buffer/buffer.js"
-                    }
-                ],
-                options: {
-                    browserifyOptions:{
-                        standalone: "buffer"
-                    }
-                }
-            }
         }
 
     });
