@@ -32,7 +32,26 @@ async function readMetadataFromFile(file){
     let arrayBuffer = await readFileAsArrayBufferAsync(file);
 
     let nodeBuffer = makeFacade(arrayBuffer);
-    let meta = IptcParser.IptcParser.parse(nodeBuffer);
+    let photoshop_iptc = {};
+    let xmp = {};
 
+    var iptc_error, xmp_error;
+
+    try {
+      photoshop_iptc = IptcParser.IptcParser.parse(nodeBuffer);
+    } catch (e) {
+      iptc_error = e;
+    }
+
+    try {
+      xmp = await xmpreader.fromBuffer(nodeBuffer);
+    } catch (e) {
+      xmp_error = e;
+    }
+
+    if (iptc_error && xmp_error) {throw {iptc_error, xmp_error}; }
+
+    let meta = {caption: "", keywords: [], ...photoshop_iptc, ...xmp};
+    meta.headline = meta.headline || meta.title || "";
     return meta;
 }

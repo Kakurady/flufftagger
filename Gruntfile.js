@@ -29,6 +29,21 @@ module.exports = function(grunt) {
                     }
                 }
             },
+            'xmp-reader': {
+                files: [
+                    {
+                        src: "node_modules/xmp-reader/index.js",
+                        dest: "chrome_ext/ext/xmp-reader/xmpreader.js"
+                    }
+                ],
+                options: {
+                    browserifyOptions:{
+                        debug: false,
+                        standalone: "xmpreader",
+                        builtins: []
+                    }
+                }
+            },
         }
 
     });

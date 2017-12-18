@@ -15,8 +15,10 @@
         {
             "matches": ["https://www.weasyl.com/submit/visual"],
             "js": [
+                "require_stub.js",
                 "ext/webextension-polyfill/browser-polyfill.js",
                 "ext/ts-node-iptc/IptcReader.js",
+                "ext/xmp-reader/xmpreader.js",
                 "bufferFacade.js",
                 "cscript_common.js",
                 "cscript_weasyl.js"
@@ -29,8 +31,10 @@
             "http://sfw.furaffinity.net/submit*"
             ],
             "js": [
+                "require_stub.js",
                 "ext/webextension-polyfill/browser-polyfill.js",
                 "ext/ts-node-iptc/IptcReader.js",
+                "ext/xmp-reader/xmpreader.js",
                 "bufferFacade.js",
                 "cscript_common.js",
                 "cscript_furaffinity.js"

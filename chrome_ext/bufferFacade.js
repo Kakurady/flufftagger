@@ -44,6 +44,17 @@ function makeFacade(arrayBuffer){
               }
             }
           }
+        case "indexOf":
+          return function indexOf(string){
+            // this is very inefficient.
+            let charCodes = [...string].map(x=>x.charCodeAt(0));
+            return target.findIndex(function(e, index, array){
+              for(var i = 0; i < charCodes.length; i++){
+                if (target[index+i] !== charCodes[i]) {return false;}
+              }
+              return true;
+            });
+          }
         case "length":
         default:
           return target[property];
