@@ -17,7 +17,7 @@
   "repository": "kakurady/flufftagger",
   "devDependencies": {
     "buffer": "^5.0.8",
-    "grunt": "^1.0.1",
+    "grunt": "^1.5.3",
     "grunt-browserify": "^5.2.0",
     "grunt-contrib-copy": "^1.0.0",
     "ts-node-iptc": "^1.0.9",
